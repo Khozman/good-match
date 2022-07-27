@@ -1,14 +1,12 @@
-const http = require('http');
+const fs = require('fs');
 
-const hostname = '127.0.0.1';
-const port = 3000;
-
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World!');
+fs.readFile('./csv_files/players.csv', 'utf8', (err, data) => {
+    if (err) throw err;
+    console.log(data);
 });
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+// exit on uncaught errors
+process.on('uncaughtException', err => {
+    console.error(`There was an uncaught error: ${err}`);
+    process.exit(1);
+})
